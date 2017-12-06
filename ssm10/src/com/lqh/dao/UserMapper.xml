@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.lqh.dao.UserMapper">
+   <select id="getLoginUser" parameterType="String" resultType="com.lqh.entity.User">
+   		select * from smbms_user where userCode=#{userCode} and userPassword=#{userPassword}
+   </select>
+   <select id="getUserList" resultType="User">
+   		select u.*,r.roleName as userRoleName from smbms_user u,smbms_role r where u.userRole = r.id
+   		<if test="userRole>0">
+   			and u.userRole = #{userRole}
+   		</if>
+   		 and u.userName like '%${userName}%'
+   		 order by u.creationDate DESC
+   		  limit #{currentPageNo},#{pageSize}
+   </select>
+   
+   <select id="getRoleList" resultType="Role">
+   		select * from smbms_role
+   </select>
+   
+   <select id="getUserRows" resultType="int">
+   		select count(*) from smbms_user u,smbms_role r where u.userRole = r.id
+   		<if test="userRole>0">
+   			and u.userRole = #{userRole}
+   		</if>
+   		 and u.userName like '%${userName}%'
+   		 order by u.creationDate DESC
+   </select>
+   <select id="getUser" resultType="User">
+   		select u.*,r.id,r.roleName as userRoleName from smbms_user u,smbms_role r where u.userRole = r.id
+   		and u.id=#{id}
+   </select>
+</mapper>

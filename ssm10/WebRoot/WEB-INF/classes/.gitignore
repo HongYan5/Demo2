@@ -1,0 +1,5 @@
+/applicationContext-mvc.xml
+/applicationContext.xml
+/com
+/database.properties
+/mybatis.xml
